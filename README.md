@@ -1,27 +1,64 @@
-# AngularWithPreCommitHooks
+# Angular With PreCommit Hooks
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.3.
 
-## Development server
+## Husky Pre-commit hook Setup
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+This is the pre-commit hook set up strategy for angular projects. By setting this hook we can ensure to commit files will be linting free and formatted with prettier formatter. This is a sanitization process before pushing any code that may have linting issue or having build issue.
 
-## Code scaffolding
+<strong>STEP I:</strong> Run below command:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```javascript
+yarn add husky lint-staged prettier -D
+```
 
-## Build
+- `husky` makes it easy to use githooks as if they are npm scripts.
+- `lint-staged` allows us to run scripts on staged files in git. See this [blog post about lint-staged to learn more about it](https://medium.com/@okonetchnikov/make-linting-great-again-f3890e1ad6b8).
+- `prettier` is the JavaScript formatter we will run before commits.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+<strong>STEP II:</strong> Add below configuration to package.json file:
 
-## Running unit tests
+```javascript
+"devDependencies": {
+  // ...
+},
+"lint-staged": {
+  "src/**/*.{js,ts,scss,md,html,json}": [
+    "prettier --write",
+    "git add"
+  ]
+},
+"husky": {
+  "hooks": {
+    "pre-commit": "ng lint && lint-staged",
+    "pre-push": "ng build --prod"
+  }
+}
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Usage
 
-## Running end-to-end tests
+<strong>STEP I:</strong> Run below command to stage your un-committed files
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```javascript
+git add .
+```
 
-## Further help
+<strong>STEP II:</strong> Run below to commit the changes
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+```javascript
+git commit -m <commit message>
+```
+
+ - It will run `ng lint` first to lint the whole project. If there is any linting issue, it will not proceed to commit the files, else, the staged files will be formatted automatically and committed.
+
+### If there are linting issues:
+
+ - First resolve the linting issues then again start from STEP I.
+
+<strong>STEP III:</strong> Run below to push the changes to repo
+
+```javascript
+git push
+```
+This will run the `ng build --prod` command first to check if the build is not getting failed by the new changes. If everything works fine it will let you finally push the code to repo.
