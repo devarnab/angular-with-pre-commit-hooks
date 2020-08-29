@@ -50,7 +50,7 @@ git add .
 git commit -m <commit message>
 ```
 
- - It will run `ng lint` first to lint the whole project. If there is any linting issue, it will not proceed to commit the files, else, the staged files will be formatted automatically and committed.
+ - It will run `ng lint` first to lint the files. If there is any linting issue, it will not proceed to commit the files, else, the staged files will be formatted automatically and committed.
 
 ### If there are linting issues:
 
