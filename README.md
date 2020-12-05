@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Husky Pre-commit hook Setup
 
-This is the pre-commit hook set up strategy for angular projects. By setting this hook we can ensure to commit files will be linting free and formatted with prettier formatter. This is a sanitization process before pushing any code that may have linting issue or having build issue.
+This is the pre-commit hook set up a strategy for angular projects. By setting this hook we can ensure that committed files will be linting error-free and formatted with prettier code-formatter. This is a sanitization technique before pushing any code that may have a linting issue or having a build issue.
 
 <strong>STEP I:</strong> Run below command:
 
@@ -54,11 +54,11 @@ git commit -m <commit message>
 
 ### If there are linting issues:
 
- - First resolve the linting issues then again start from STEP I.
+ - First, resolve the linting issues then again start from STEP I.
 
 <strong>STEP III:</strong> Run below to push the changes to repo
 
 ```javascript
 git push
 ```
-This will run the `ng build --prod` command first to check if the build is not getting failed by the new changes. If everything works fine it will let you finally push the code to repo.
+This will run the `ng build --prod` command first to check if the build is not getting failed by the new changes. If everything works fine it will let you finally push the code to the repo.
